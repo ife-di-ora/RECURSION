@@ -1,0 +1,36 @@
+ALGORITHM palindrome_tester
+VAR
+    testword, testresult : STRING
+BEGIN
+    Write ("Enter a word to check if it is a palindrome: ")
+    Read (testword)
+    testresult = palindrome(testword)
+    Write (testresult)
+END
+
+
+FUNCTION palindrome(word : STRING) : STRING           // start function
+VAR
+    tag, trimmed : STRING := ""                       // declare 'tag' and 'trimmed' as a string variables with no content
+    i : INTEGER                                     // declare i (counter) as integer
+    n: INTEGER := word.length                       // declare n as interger to hold word length
+
+BEGIN
+    IF (n < 2 OR n = " ") THEN                                 // BASE CASE 1: if lenght of string is less than 2, terminate function and return 'word is a palindrome'
+            tag = "word is a palindrome"        
+            RETURN tag 
+    ELSE_IF
+            (word[0] <> word[n-1])                  // check if the letters at opposite ends are matching.
+            tag = "word is not a palindrome"        // if not matching, return word not a palindrome
+            RETURN tag
+    ELSE 
+        FOR i FROM 1 TO n-2 STEP 1  DO              // use a loop to reduce word by removing first and last letters
+            trimmed = trimmed + word[i]             // create new word from second to second-to-last items
+        END_FOR
+        tag = palindrome(trimmed)                   // recurse trimmed word to check all over again
+        RETURN tag                                  // return tag from called recurse
+    END_IF                                          
+END
+
+
+
